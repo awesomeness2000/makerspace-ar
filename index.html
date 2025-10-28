@@ -23,14 +23,5 @@
       <a-light type="directional" position="1 1 1" intensity="1"></a-light>
     </a-scene>
 
-    <script>
-      // Lower pixel ratio for smoother performance on phones
-      window.addEventListener('load', () => {
-        const scene = AFRAME.scenes[0];
-        if (scene && scene.renderer) {
-          scene.renderer.setPixelRatio(0.75);
-        }
-      });
-    </script>
   </body>
 </html>
