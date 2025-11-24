@@ -8,16 +8,16 @@
 
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; detectionMode: mono; patternRatio: 0.5;">
+      
       <a-marker preset="hiro">
-        <!-- 3D printer model -->
+
         <a-entity
           gltf-model="url(assets/printer-v1.glb)"
           position="0 0.2 0"
-          rotation="0 180 0"
+          rotation="0 0 0"
           scale="0.005 0.005 0.005">
         </a-entity>
 
-        <!-- Title label -->
         <a-text
           value="3D Printer"
           position="0 0.8 0"
@@ -25,61 +25,51 @@
           color="yellow">
         </a-text>
 
-        <!-- Info button (clickable) -->
+    
         <a-entity
           id="infoButton"
-          geometry="primitive: plane; height: 0.2; width: 0.7"
-          material="color: yellow"
-          position="0 0.9 1"
-          text="value: How to use; align: center; color: black; width: 2"
-          class="clickable">
+          geometry="primitive: plane; height: 0.25; width: 0.9"
+          material="color: orange"
+          position="0 1.0 0.95"
+          text="value: How to use; align: center; color: black; width: 3"
+          class="clickable"
+          info-button-listener>
         </a-entity>
 
-        <!-- Info panel (starts hidden) -->
+    
         <a-plane
           id="infoPanel"
-          position="0 1 0"
-          width="1.7"
-          height="0.8"
+          position="0 1.5 0"
+          width="2"
+          height="0.9"
           material="color: #222; opacity: 0.9"
           visible="false">
         </a-plane>
 
-        <!-- Info panel text (also hidden at start) -->
         <a-text
           id="infoPanelText"
           value="Step 1: Turn on the printer.\nStep 2: Load filament.\nStep 3: Start your print from the SD card."
-          position="0 1 0.01"
+          position="0 1.5 0.01"
           align="center"
           color="#ffffff"
-          width="3"
+          width="4"
           visible="false">
         </a-text>
 
       </a-marker>
 
-      <!-- Camera with mouse/touch cursor + raycaster for clicks -->
+
       <a-entity
         camera
-        cursor="rayOrigin: mouse"
-        raycaster="objects: .clickable">
+        cursor="rayOrigin: mouse; fuse: false"
+        raycaster="objects: .clickable; far: 10;">
       </a-entity>
-
-      <!-- Lights -->
       <a-light type="ambient" color="#ffffff"></a-light>
       <a-light type="directional" position="1 1 1" intensity="1"></a-light>
+
     </a-scene>
 
     <script>
-      // Lower pixel ratio for smoother performance on phones
-      window.addEventListener('load', () => {
-        const scene = AFRAME.scenes[0];
-        if (scene && scene.renderer) {
-          scene.renderer.setPixelRatio(0.75);
-        }
-      });
-
-      // Component to toggle the info panel on button click
       AFRAME.registerComponent('info-button-listener', {
         init: function () {
           const panel = document.querySelector('#infoPanel');
@@ -93,14 +83,7 @@
           });
         }
       });
-
-      // Attach the listener to the button once DOM is ready
-      document.addEventListener('DOMContentLoaded', () => {
-        const btn = document.querySelector('#infoButton');
-        if (btn) {
-          btn.setAttribute('info-button-listener', '');
-        }
-      });
     </script>
+
   </body>
 </html>
